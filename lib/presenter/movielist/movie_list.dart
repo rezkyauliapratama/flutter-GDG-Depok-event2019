@@ -20,8 +20,6 @@ class MovieListView extends StatelessWidget {
 class BodyPage extends StatefulWidget {
   MovieListBloc bloc = MovieListBloc();
 
-
-
   @override
   State<StatefulWidget> createState() {
     bloc.getMovies(1);
@@ -42,8 +40,15 @@ class StateMovieList extends State<BodyPage> {
           builder: (context, AsyncSnapshot<List<MovieDto>> snapshot) {
             if (snapshot.hasData) {
               print("snapshot : ${snapshot.data}");
-              return Center(
-                child: Text("has data"),
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index){
+                    MovieDto movie = snapshot.data[index];
+                    return ListTile(
+                      title: Text(movie.title),
+                      subtitle: Text(movie.overview)
+                    );
+                  }
               );
             } else {
               return Center(
