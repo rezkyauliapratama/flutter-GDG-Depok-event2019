@@ -3,7 +3,7 @@ import 'package:gdg_depok_2019_beginner/data/entity/list_movie_dto.dart';
 import 'package:gdg_depok_2019_beginner/domain/repository/movie_repository.dart';
 
 
-class MoviesProviderApi implements MovieInterface {
+class MoviesProviderApi implements MovieRepository {
   final Dio _dio;
   final String secretKey = "b77a9c9af1b4434dcbbacdde72879e7c";
   final String _urlPopularMovies = "/movie/popular";

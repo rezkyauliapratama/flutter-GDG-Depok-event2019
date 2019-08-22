@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'movie_list.dart';
+import 'movielist/movie_list.dart';
 
 class App extends StatelessWidget {
 
