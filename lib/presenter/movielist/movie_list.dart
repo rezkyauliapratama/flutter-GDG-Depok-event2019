@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gdg_depok_2019_beginner/data/entity/movie_dto.dart';
 import 'package:gdg_depok_2019_beginner/presenter/movielist/movie_list_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MovieListView extends StatelessWidget {
   @override
@@ -27,6 +28,9 @@ class BodyPage extends StatefulWidget {
   }
 }
 
+/*
+1. State class
+*/
 class StateMovieList extends State<BodyPage> {
   MovieListBloc bloc;
 
@@ -61,27 +65,96 @@ class StateMovieList extends State<BodyPage> {
     super.dispose();
   }
 
+  /*
+  2. Widget to display item of movie
+   */
   Widget moviesListTile(BuildContext context, MovieDto item) {
+
+    //3. Array of widget to create the layout
+    List<Widget> children = <Widget>[
+      _backgroundPoster(item),
+      Container(
+        decoration: _buildGradientBackground(),
+        padding: const EdgeInsets.only(
+          bottom: 16.0,
+          left: 16.0,
+          right: 16.0,
+        ),
+        child: _buildTextualInfo(item),
+      ),
+    ];
+
     return GestureDetector(
       onTap: () {
         print("ontap");
         Navigator.pushNamed(context, "/${item.id}");
       },
-      child: Card(child: _buildTextualInfo(item)),
+      child: Card(
+          child: Container(
+        height: 200,
+        child: Stack(
+          fit: StackFit.expand,
+          children: children,
+        ),
+      )),
+    );
+  }
+
+  Widget _backgroundPoster(MovieDto item) {
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        Shimmer.fromColors(
+            baseColor: Colors.grey[300],
+            highlightColor: Colors.grey[100],
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.white,
+            )),
+        Image.network(
+          "http://image.tmdb.org/t/p/w780/" + item.backdropPath,
+          fit: BoxFit.cover,
+        )
+      ],
     );
   }
 
   Widget _buildTextualInfo(MovieDto movieCard) {
-    return Container(
-      margin: EdgeInsets.all(10.5),
-      padding: EdgeInsets.all(10.5),
-      child: Column(
-        children: <Widget>[
-          Image.network(
-              "http://image.tmdb.org/t/p/w185/" + movieCard.posterPath,
-              fit: BoxFit.fill),
-          Padding(padding: EdgeInsets.only(top: 3)),
-          Text(movieCard.title),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          movieCard.title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16.0,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 4.0),
+        Text(
+          movieCard.voteAverage.toString(),
+          style: const TextStyle(
+            fontSize: 12.0,
+            color: Colors.white70,
+          ),
+        ),
+      ],
+    );
+  }
+
+  BoxDecoration _buildGradientBackground() {
+    return const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+        stops: <double>[0.0, 0.7, 0.7],
+        colors: <Color>[
+          Colors.black,
+          Colors.transparent,
+          Colors.transparent,
         ],
       ),
     );
