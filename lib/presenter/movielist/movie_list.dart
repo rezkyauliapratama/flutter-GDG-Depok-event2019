@@ -18,7 +18,7 @@ class MovieListView extends StatelessWidget {
 * Widget BodyPage
 */
 class BodyPage extends StatefulWidget {
-  MovieListBloc bloc = MovieListBloc();
+  final MovieListBloc bloc = MovieListBloc();
 
   @override
   State<StatefulWidget> createState() {
