@@ -26,6 +26,7 @@ dependencies:
   dio: ^2.1.2
   meta: ^1.1.6
   json_serializable: ^2.2.1
+  shimmer: ^1.0.0
 
 dev_dependencies:
   flutter_test:

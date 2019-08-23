@@ -13,7 +13,7 @@ class DetailMovieBloc {
 
   DetailMovieBloc() : _detailMovieUsecase = DetailMovieUseCase();
 
-  Stream<MovieDetailDto> get movies => _order.stream;
+  Stream<MovieDetailDto> get detailMovie => _order.stream;
 
   void getDetailMovie(int movieId) async {
     var data = Map<String,dynamic>();
