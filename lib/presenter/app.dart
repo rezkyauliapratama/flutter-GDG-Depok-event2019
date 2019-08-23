@@ -12,4 +12,14 @@ class App extends StatelessWidget {
       home: MovieListView()
     );
   }
+
+  Route routes(RouteSettings setting) {
+    if (setting.name == '/') {
+      return MaterialPageRoute(
+        builder: (BuildContext context) {
+          return MovieListView();
+        },
+      );
+    }
+  }
 }
