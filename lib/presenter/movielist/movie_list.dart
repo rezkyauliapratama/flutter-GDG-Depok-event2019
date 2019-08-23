@@ -42,14 +42,10 @@ class StateMovieList extends State<BodyPage> {
               print("snapshot : ${snapshot.data}");
               return ListView.builder(
                   itemCount: snapshot.data.length,
-                  itemBuilder: (context, index){
+                  itemBuilder: (context, index) {
                     MovieDto movie = snapshot.data[index];
-                    return ListTile(
-                      title: Text(movie.title),
-                      subtitle: Text(movie.overview)
-                    );
-                  }
-              );
+                    return moviesListTile(context, movie);
+                  });
             } else {
               return Center(
                 child: CircularProgressIndicator(),
@@ -63,5 +59,31 @@ class StateMovieList extends State<BodyPage> {
   void dispose() {
     bloc.dispose();
     super.dispose();
+  }
+
+  Widget moviesListTile(BuildContext context, MovieDto item) {
+    return GestureDetector(
+      onTap: () {
+        print("ontap");
+        Navigator.pushNamed(context, "/${item.id}");
+      },
+      child: Card(child: _buildTextualInfo(item)),
+    );
+  }
+
+  Widget _buildTextualInfo(MovieDto movieCard) {
+    return Container(
+      margin: EdgeInsets.all(10.5),
+      padding: EdgeInsets.all(10.5),
+      child: Column(
+        children: <Widget>[
+          Image.network(
+              "http://image.tmdb.org/t/p/w185/" + movieCard.posterPath,
+              fit: BoxFit.fill),
+          Padding(padding: EdgeInsets.only(top: 3)),
+          Text(movieCard.title),
+        ],
+      ),
+    );
   }
 }
